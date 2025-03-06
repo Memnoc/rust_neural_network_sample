@@ -2,7 +2,7 @@
 
 ## Overview
 
-What you've implemented is a simple feed-forward neural network with one hidden layer that learns the XOR function. XOR (exclusive OR) is a logical operation that outputs true only when inputs differ - it's a classic example for neural networks because it's not linearly separable.
+This implementation is a simple feed-forward (often written as "feedforward") neural network with one hidden layer that learns the XOR function. XOR (exclusive OR) is a logical operation that outputs true only when inputs differ - it's a classic example for neural networks because it's not linearly separable.
 
 ## Neural Network Mathematics
 
