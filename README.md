@@ -4,6 +4,21 @@
 
 What you've implemented is a simple feed-forward neural network with one hidden layer that learns the XOR function. XOR (exclusive OR) is a logical operation that outputs true only when inputs differ - it's a classic example for neural networks because it's not linearly separable.
 
+## Neural Network Mathematics
+
+In simple terms:
+
+1. **Forward propagation**: Matrix multiplications and activation functions transform inputs into predictions
+2. **Back-propagation**: Calculating gradients (derivatives) to adjust weights based on prediction errors
+3. **Gradient descent**: The process of incrementally updating weights to minimize errors
+
+The matrices in the code represent the following:
+
+- `weights1`: Connections from input layer to hidden layer (3×2 matrix)
+- `biases1`: Bias terms for the hidden layer (3 values)
+- `weights2`: Connections from hidden layer to output layer (1×3 matrix)
+- `biases2`: Bias term for the output layer (1 value)
+
 ## Network Architecture
 
 - **Input layer**: 2 neurons (for the two binary inputs)
@@ -16,7 +31,6 @@ What you've implemented is a simple feed-forward neural network with one hidden 
 
 ```rust
 pub fn new(input_size: usize, hidden_size: usize, output_size: usize) -> Self {
-    // NOTE: Initialize weights and biases with random values between -1.0 and 1.0
 }
 ```
 
@@ -38,7 +52,7 @@ pub fn forward(&self, input: &Array1<f64>) -> (Array1<f64>, Array1<f64>, Array1<
 - **First layer calculation**: Multiply inputs by weights, add biases, apply sigmoid
 - **Second layer calculation**: Multiply hidden outputs by weights, add biases, apply sigmoid
 - The sigmoid function `1.0 / (1.0 + (-x).exp())` squashes values between 0 and 1
-- using the .exp() method, calculates e^x (e raised to the power of x). The expression (- x).exp() calculates e^(-x), which is exactly what the sigmoid function requires.
+- using the `.exp()` method, calculates `e^x` (e raised to the power of x). The expression `(- x).exp()` calculates `e^(-x)`, which is exactly what the sigmoid function requires.
 
 ### 3. Back-propagation (Training)
 
@@ -62,6 +76,7 @@ The training process follows these steps:
 3. **Propagate error backward**: Calculate hidden layer errors by transposing weights
 4. **Calculate hidden delta**: Hidden errors multiplied by sigmoid derivative
 5. **Update weights and biases**: Adjust parameters using deltas, inputs, and learning rate
+
    The main training loop runs for 10,000 epochs, and in each epoch it processes all 4 XOR patterns:
 
 ```rust
@@ -90,7 +105,7 @@ for input in inputs.iter() {
 }
 ```
 
-The output will look something like:
+The output should look something like:
 
 ```
 [0.0, 0.0] -> [0.0346]
@@ -107,28 +122,13 @@ The output will look something like:
 - If the network is well-trained, it should expose values very close to 0 for [0,0] and [1,1] inputs, and very close to 1 for [0,1] and [1,0] inputs
 - The exact values will vary due to random initialization, but the pattern should be clear
 
-## Potential Improvements
+## Worthy improvements
 
 1. **Add error tracking**: To monitor training progress, you could add code to calculate and print the average error after each epoch.
 2. **Early stopping**: Stop training if error falls below a threshold to save computation.
 3. **Learning rate decay**: Gradually reduce learning rate over time for more precise convergence.
 4. **Weight initialization**: Use more sophisticated initialization methods like Xavier/Glorot.
 5. **Batch training**: Update weights after processing multiple examples instead of one at a time.
-
-## Neural Network Mathematics
-
-In simple terms:
-
-1. **Forward propagation**: Matrix multiplications and activation functions transform inputs into predictions
-2. **Back-propagation**: Calculating gradients (derivatives) to adjust weights based on prediction errors
-3. **Gradient descent**: The process of incrementally updating weights to minimize errors
-
-The matrices in the code represent the following:
-
-- `weights1`: Connections from input layer to hidden layer (3×2 matrix)
-- `biases1`: Bias terms for the hidden layer (3 values)
-- `weights2`: Connections from hidden layer to output layer (1×3 matrix)
-- `biases2`: Bias term for the output layer (1 value)
 
 ## Credits
 
