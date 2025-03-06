@@ -9,7 +9,7 @@ This implementation is a simple feed-forward (often written as "feedforward") ne
 In simple terms:
 
 1. **Forward propagation**: Matrix multiplications and activation functions transform inputs into predictions
-2. **Back-propagation**: Calculating gradients (derivatives) to adjust weights based on prediction errors
+2. **Back propagation**: Calculating gradients (derivatives) to adjust weights based on prediction errors
 3. **Gradient descent**: The process of incrementally updating weights to minimize errors
 
 The matrices in the code represent the following:
