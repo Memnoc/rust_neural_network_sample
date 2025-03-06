@@ -38,15 +38,14 @@ pub fn forward(&self, input: &Array1<f64>) -> (Array1<f64>, Array1<f64>, Array1<
 - **First layer calculation**: Multiply inputs by weights, add biases, apply sigmoid
 - **Second layer calculation**: Multiply hidden outputs by weights, add biases, apply sigmoid
 - The sigmoid function `1.0 / (1.0 + (-x).exp())` squashes values between 0 and 1
+- using the .exp() method, calculates e^x (e raised to the power of x). The expression (- x).exp() calculates e^(-x), which is exactly what the sigmoid function requires.
 
 ### 3. Back-propagation (Training)
 
 ```rust
 pub fn train(&mut self, input: &Array1<f64>, target: &Array1<f64>, learning_rate: f64) {
-    // Forward pass
     let (hidden_output, final_input, final_output) = self.forward(input);
 
-    // Calculate errors
     let output_errors = target - &final_output;
     let output_delta = &output_errors * &Self::sigmoid_derivative(&final_output);
     let hidden_errors = self.weights2.t().dot(&output_delta);
@@ -82,7 +81,7 @@ For the XOR function, the inputs and expected outputs are:
 
 ## Reading the Output
 
-After training, your code calls `network.forward()` on each input pattern and prints the results:
+After training, we `network.forward()` on each input pattern and prints the results:
 
 ```rust
 for input in inputs.iter() {
@@ -105,7 +104,7 @@ The output will look something like:
 - The sigmoid activation function outputs values between 0 and 1
 - Values close to 0 represent "False"
 - Values close to 1 represent "True"
-- If your network is well-trained, you should see values very close to 0 for [0,0] and [1,1] inputs, and very close to 1 for [0,1] and [1,0] inputs
+- If the network is well-trained, it should expose values very close to 0 for [0,0] and [1,1] inputs, and very close to 1 for [0,1] and [1,0] inputs
 - The exact values will vary due to random initialization, but the pattern should be clear
 
 ## Potential Improvements
@@ -124,7 +123,7 @@ In simple terms:
 2. **Back-propagation**: Calculating gradients (derivatives) to adjust weights based on prediction errors
 3. **Gradient descent**: The process of incrementally updating weights to minimize errors
 
-The matrices in your code represent the following:
+The matrices in the code represent the following:
 
 - `weights1`: Connections from input layer to hidden layer (3×2 matrix)
 - `biases1`: Bias terms for the hidden layer (3 values)
