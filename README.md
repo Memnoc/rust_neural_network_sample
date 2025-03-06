@@ -16,7 +16,7 @@ What you've implemented is a simple feed-forward neural network with one hidden 
 
 ```rust
 pub fn new(input_size: usize, hidden_size: usize, output_size: usize) -> Self {
-    // Initialize weights and biases with random values between -1.0 and 1.0
+    // NOTE: Initialize weights and biases with random values between -1.0 and 1.0
 }
 ```
 
@@ -39,7 +39,7 @@ pub fn forward(&self, input: &Array1<f64>) -> (Array1<f64>, Array1<f64>, Array1<
 - **Second layer calculation**: Multiply hidden outputs by weights, add biases, apply sigmoid
 - The sigmoid function `1.0 / (1.0 + (-x).exp())` squashes values between 0 and 1
 
-### 3. Backpropagation (Training)
+### 3. Back-propagation (Training)
 
 ```rust
 pub fn train(&mut self, input: &Array1<f64>, target: &Array1<f64>, learning_rate: f64) {
@@ -51,23 +51,19 @@ pub fn train(&mut self, input: &Array1<f64>, target: &Array1<f64>, learning_rate
     let output_delta = &output_errors * &Self::sigmoid_derivative(&final_output);
     let hidden_errors = self.weights2.t().dot(&output_delta);
     let hidden_delta = &hidden_errors * &Self::sigmoid_derivative(&hidden_output);
-
-    // Update weights and biases
-    // ...
 }
 ```
 
+## Understanding the Training Process
+
 The training process follows these steps:
 
-1. **Calculate output error**: The difference between target and actual output
+1. **Calculate output error**: The difference between target and actual output -> how off the output is. Very far off, presumably, on the first cycles.
 2. **Calculate output delta**: Error multiplied by sigmoid derivative (sensitivity)
 3. **Propagate error backward**: Calculate hidden layer errors by transposing weights
 4. **Calculate hidden delta**: Hidden errors multiplied by sigmoid derivative
 5. **Update weights and biases**: Adjust parameters using deltas, inputs, and learning rate
-
-## Understanding the Training Process
-
-The main training loop runs for 10,000 epochs, and in each epoch it processes all 4 XOR patterns:
+   The main training loop runs for 10,000 epochs, and in each epoch it processes all 4 XOR patterns:
 
 ```rust
 for _ in 0..epochs {
@@ -125,7 +121,7 @@ The output will look something like:
 In simple terms:
 
 1. **Forward propagation**: Matrix multiplications and activation functions transform inputs into predictions
-2. **Backpropagation**: Calculating gradients (derivatives) to adjust weights based on prediction errors
+2. **Back-propagation**: Calculating gradients (derivatives) to adjust weights based on prediction errors
 3. **Gradient descent**: The process of incrementally updating weights to minimize errors
 
 The matrices in your code represent the following:
@@ -137,4 +133,5 @@ The matrices in your code represent the following:
 
 ## Credits
 
-Implementation original [source](https://evolveasdev.com/blogs/tutorial/building-a-neural-network-from-scratch-in-rust)
+- Implementation original [source](https://evolveasdev.com/blogs/tutorial/building-a-neural-network-from-scratch-in-rust)
+- An [explanation](https://www.analyticsvidhya.com/blog/2023/01/why-is-sigmoid-function-important-in-artificial-neural-networks/) of the Sigmoid function and its uses in feed-forwarding neural networks implementations.
